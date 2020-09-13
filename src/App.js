@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import SearchMovieForm from "./components/SearchMovieForm";
-import './App.scss';
+import './App.sass';
 
 class App extends Component {
 
@@ -8,7 +8,7 @@ class App extends Component {
 
         return (
             <div className="container">
-                <p>Welcome to the Zoosh movie database searcher.</p>
+                <h2>Welcome to the Zoosh movie database searcher!</h2>
                 <SearchMovieForm></SearchMovieForm>
             </div>
         )

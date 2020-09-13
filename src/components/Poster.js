@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import '../App.scss';
+import '../App.sass';
 import {imageExists, CHECK_IF_IMAGE_EXISTS} from "../Helper";
 
 class Poster extends Component {
@@ -10,7 +10,7 @@ class Poster extends Component {
 
         return (
             typeof poster !== 'undefined' && CHECK_IF_IMAGE_EXISTS && imageExists(poster)  &&
-            <div>
+            <div className="resultPoster">
                 <p><img alt="" src={poster} /></p>
             </div>
         )

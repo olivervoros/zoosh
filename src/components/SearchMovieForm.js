@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import '../App.scss';
+import '../App.sass';
 import axios from "axios";
 import SearchResult from "./SearchResult";
-import Spinner from "./Spinner";
 import { IMDB_API_ENDPOINT } from "../Helper";
 
 class SearchMovieForm extends Component {
@@ -26,6 +25,7 @@ class SearchMovieForm extends Component {
         try {
             let result = await axios.get(IMDB_API_ENDPOINT + searchTitle);
             await this.setState({ searchResult: result.data.Search });
+            await new Promise(r => setTimeout(r, 2000)); // TODO: remove
             await this.setState({ isLoading: false });
 
         } catch (error) {
@@ -46,12 +46,11 @@ class SearchMovieForm extends Component {
                                    name="movieTitle" type="text"/>
                         </div>
                         <p>
-                            <button>Search</button>
+                            <button className="button">Search</button>
                         </p>
                     </form>
                 </div>
-                {this.state.isLoading && <Spinner />}
-                    <SearchResult searchResult = { this.state.searchResult }></SearchResult>
+                <SearchResult searchResult = { this.state.searchResult } isLoading={this.state.isLoading}></SearchResult>
             </div>
         )
     }

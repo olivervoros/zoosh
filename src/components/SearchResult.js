@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import '../App.scss';
+import '../App.sass';
 import axios from "axios";
 import { WIKIPEDIA_OPENSEARCH_API_ENDPOINT, WIKIPEDIA_GET_LEAD_ARTICLE_ENDPOINT } from "../Helper";
 import SearchResultWikipedia from "./SearchResultWikipedia";
@@ -22,6 +22,7 @@ class SearchResult extends Component {
             result.data.leadArticle = leadArticleResult.data;
             result.data.imdbID = imdbID;
             await this.setState({ searchResultWikipedia: result });
+            await new Promise(r => setTimeout(r, 2000)); // TODO: remove
             await this.setState({ isLoading: false });
 
         } catch (error) {
@@ -31,23 +32,26 @@ class SearchResult extends Component {
 
     render() {
 
-        const {searchResult} = this.props;
+        const {searchResult, isLoading} = this.props;
 
         return (
             typeof searchResult !== 'undefined' && searchResult.length > 0 &&
             <div>
-                <h1>IMDB Movie Database Search Results</h1>
+                <Spinner isLoading={isLoading} />
+                <h4>IMDB Movie Database Search Results:</h4>
                 {searchResult.map((result) => (
-                    <div key={result.imdbID}>
+                    <div className="resultCard" key={result.imdbID}>
+                        <div className="resultData">
                         <a onClick={(event) => this.searchWikipedia(event, result.Title, result.imdbID)} href="">
-                            <p>Title: {result.Title}</p>
+                            <h3>{result.Title}</h3>
                         </a>
                         <p>Year: {result.Year}</p>
                         <p>IMDB ID: {result.imdbID}</p>
                         <p>Type: {result.Type}</p>
+                        </div>
                         <Poster poster={ result.Poster }></Poster>
-                        {this.state.isLoading && <Spinner />}
-                        <SearchResultWikipedia imdbID={result.imdbID} searchResultWikipedia={ this.state.searchResultWikipedia }></SearchResultWikipedia>
+                        <div className="break"></div>
+                        <SearchResultWikipedia isLoading={this.state.isLoading} imdbID={result.imdbID} searchResultWikipedia={ this.state.searchResultWikipedia }></SearchResultWikipedia>
                     </div>
                 ))}
             </div>
