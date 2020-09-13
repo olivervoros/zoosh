@@ -49,7 +49,7 @@ class SearchResult extends Component {
                     <div className="resultCard" key={result.imdbID}>
                         <div className="resultData">
                         <a onClick={(event) => this.searchWikipedia(event, result.Title, result.imdbID)} href="">
-                            <h3>{result.Title}</h3>
+                            <h3 className="articleTitle">{result.Title}</h3>
                         </a>
                         <p>Year: {result.Year}</p>
                         <p>IMDB ID: {result.imdbID}</p>
