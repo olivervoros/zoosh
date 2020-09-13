@@ -41,10 +41,10 @@ class SearchResult extends Component {
         return (
             <div>
                 <Spinner isLoading={isLoading} />
-                <h4>IMDB Movie Database Search Results:</h4>
                 {! hasResults && this.state.displayErrors &&
-                    <div>No results...</div>
+                    <h4>We could not find a movie with that search term. Please try using a different term...</h4>
                 }
+                {hasResults && <h3>IMDB Movie Database Search Results:</h3>}
                 {searchResult.map((result) => (
                     <div className="resultCard" key={result.imdbID}>
                         <div className="resultData">
