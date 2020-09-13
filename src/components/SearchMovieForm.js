@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import '../App.sass';
 import axios from "axios";
 import SearchResult from "./SearchResult";
-import { IMDB_API_ENDPOINT } from "../Helper";
+import { IMDB_API_ENDPOINT, slugify } from "../Helper";
 
 class SearchMovieForm extends Component {
 
@@ -18,12 +18,17 @@ class SearchMovieForm extends Component {
         this.setState({movieTitle: event.target.value});
     }
 
+    reset(event) {
+        event.preventDefault();
+        this.setState({movieTitle: '', searchResult: [], isLoading: false});
+    }
+
     async handleSubmit(event) {
         event.preventDefault();
         await this.setState({ isLoading: true });
         const searchTitle = this.state.movieTitle;
         try {
-            let result = await axios.get(IMDB_API_ENDPOINT + searchTitle);
+            let result = await axios.get(IMDB_API_ENDPOINT + slugify(searchTitle));
             await this.setState({ searchResult: result.data.Search });
             await new Promise(r => setTimeout(r, 2000)); // TODO: remove
             await this.setState({ isLoading: false });
@@ -47,6 +52,7 @@ class SearchMovieForm extends Component {
                         </div>
                         <p>
                             <button className="button">Search</button>
+                            <button onClick={(event) => this.reset(event)} className="resetButton">Reset</button>
                         </p>
                     </form>
                 </div>

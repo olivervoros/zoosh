@@ -1,12 +1,26 @@
 import React, {Component} from 'react'
 import '../App.sass';
-import Spinner from "./Spinner";
+import WikiArticle from "./WikiArticle";
+import WikiRelatedArticle from "./WikiRelatedArticle";
 
 class SearchResultWikipedia extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = { page: 'ARTICLE' };
+
+        this.searchRelatedMovies = this.searchRelatedMovies.bind(this);
+        this.backToMovieDetails = this.backToMovieDetails.bind(this);
+    }
+
     async searchRelatedMovies(event) {
         event.preventDefault();
+        await this.setState({ page: 'RELATED' });
+    }
 
+    async backToMovieDetails(event) {
+        event.preventDefault();
+        await this.setState({ page: 'ARTICLE' });
     }
 
     render() {
@@ -17,17 +31,22 @@ class SearchResultWikipedia extends Component {
         const page = (typeof searchResultWikipedia.data === 'undefined') ? "" : searchResultWikipedia.data.leadArticle.query.pages;
         const pageID = Object.keys(page)[0];
         const leadArticle = (typeof searchResultWikipedia.data === 'undefined') ? "" : searchResultWikipedia.data.leadArticle.query.pages[pageID].extract;
+        const relatedArticles = (typeof searchResultWikipedia.data === 'undefined') ? [] : searchResultWikipedia.data.relatedArticles;
+
+        let content = ''
+        if (this.state.page==='ARTICLE') {
+            content = <WikiArticle imdbID={imdbID} articleTitle={articleTitle} leadArticle={leadArticle} isLoading={isLoading} searchRelatedMovies={this.searchRelatedMovies}></WikiArticle>;
+        } else if(this.state.page==='RELATED') {
+            content = <WikiRelatedArticle relatedArticles={relatedArticles} backToMovieDetails={this.backToMovieDetails}></WikiRelatedArticle>;
+        } else {
+            content = <div>FASZOM!</div>;
+        }
 
         return (
 
             typeof articleTitle !== 'undefined' && articleTitle.length > 0 && wikipediaArticleImdbID === imdbID &&
-            <div className="wikiArticle">
-                <Spinner isLoading={isLoading} />
-                <h1>Details for {articleTitle}</h1>
-                <p dangerouslySetInnerHTML={{ __html: leadArticle }}></p>
-                <p><a rel="noopener noreferrer" target="_blank" href={'https://www.imdb.com/title/' + imdbID}>See more on IMDB</a></p>
-                <p><a rel="noopener noreferrer" target="_blank" href={'https://www.wikipedia.org/wiki/' + articleTitle}>See more on Wikipedia</a></p>
-                <p><button className="button" onClick={(event) => this.searchRelatedMovies(event)}>Load related films</button></p>
+            <div className="container">
+                { content }
             </div>
         )
     }

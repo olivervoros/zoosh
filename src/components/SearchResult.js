@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import '../App.sass';
 import axios from "axios";
-import { WIKIPEDIA_OPENSEARCH_API_ENDPOINT, WIKIPEDIA_GET_LEAD_ARTICLE_ENDPOINT } from "../Helper";
+import { WIKIPEDIA_OPENSEARCH_API_ENDPOINT, WIKIPEDIA_GET_LEAD_ARTICLE_ENDPOINT, WIKIPEDIA_GET_RELATED_ARTICLES_ENDPOINT } from "../Helper";
 import SearchResultWikipedia from "./SearchResultWikipedia";
 import Poster from "./Poster";
 import Spinner from "./Spinner";
@@ -10,7 +10,7 @@ class SearchResult extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { searchResultWikipedia: [], isLoading: false };
+        this.state = { searchResultWikipedia: [], isLoading: false, displayError: false };
     }
 
     async searchWikipedia(event, searchTitle, imdbID) {
@@ -19,11 +19,14 @@ class SearchResult extends Component {
         try {
             let result = await axios.get(WIKIPEDIA_OPENSEARCH_API_ENDPOINT + searchTitle);
             let leadArticleResult = await axios.get(WIKIPEDIA_GET_LEAD_ARTICLE_ENDPOINT + searchTitle);
+            let relatedArticles = await axios.get(WIKIPEDIA_GET_RELATED_ARTICLES_ENDPOINT + searchTitle);
             result.data.leadArticle = leadArticleResult.data;
             result.data.imdbID = imdbID;
+            result.data.relatedArticles = relatedArticles.data;
             await this.setState({ searchResultWikipedia: result });
             await new Promise(r => setTimeout(r, 2000)); // TODO: remove
             await this.setState({ isLoading: false });
+            await this.setState({ displayError: true });
 
         } catch (error) {
             console.log(error);
@@ -33,12 +36,15 @@ class SearchResult extends Component {
     render() {
 
         const {searchResult, isLoading} = this.props;
+        const hasResults = (typeof searchResult !== 'undefined' && searchResult.length > 0)
 
         return (
-            typeof searchResult !== 'undefined' && searchResult.length > 0 &&
             <div>
                 <Spinner isLoading={isLoading} />
                 <h4>IMDB Movie Database Search Results:</h4>
+                {! hasResults && this.state.displayErrors &&
+                    <div>No results...</div>
+                }
                 {searchResult.map((result) => (
                     <div className="resultCard" key={result.imdbID}>
                         <div className="resultData">

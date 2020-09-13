@@ -17,6 +17,7 @@ body
 .button
   border: none
   padding: 15px 32px
+  margin: 0 20px
   text-align: center
   text-decoration: none
   display: inline-block
@@ -30,6 +31,11 @@ body
   &:hover
     color: white
     background-color: #4CAF50
+
+.resetButton
+  @extend .button
+  background-color: #98ff98
+  color: black
 
 input[type=text]
   width: 40%
@@ -57,7 +63,7 @@ input[type=text]
    color: black
 
 .resultData
-  width: 50%
+  width: 80%
 
 .resultPoster
     img
@@ -73,6 +79,17 @@ input[type=text]
 .spinner
   text-align: center
 
+.wikiArticle p.wikiArticleBody
+  text-align: center
+  padding: 20px
+  margin: 20px
+  line-height: 2
 
+.wikiRelatedArticle p a
+  text-align: center
+  padding: 20px
+  margin: 20px
+  line-height: 2
+  color: black
 
 
