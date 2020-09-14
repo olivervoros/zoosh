@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import '../App.sass';
-import {escapeHtml} from "../Helper";
+import {escapeHtml, IMDB_WEBSITE_URL, WIKIPEDIA_WEBSITE_URL} from "../Helper";
 
 class WikiArticle extends Component {
 
@@ -15,8 +15,8 @@ class WikiArticle extends Component {
                 <p className="wikiArticleBody" dangerouslySetInnerHTML={{ __html: escapeHtml(leadArticle) }}></p> :
                     <p>No wikipedia article could be found...</p>
                 }
-                <p><a rel="noopener noreferrer" target="_blank" href={'https://www.imdb.com/title/' + imdbID}>See more on IMDB</a></p>
-                <p><a rel="noopener noreferrer" target="_blank" href={'https://www.wikipedia.org/wiki/' + articleTitle}>See more on Wikipedia</a></p>
+                <p><a rel="noopener noreferrer" target="_blank" href={IMDB_WEBSITE_URL + imdbID}>See more on IMDB</a></p>
+                <p><a rel="noopener noreferrer" target="_blank" href={WIKIPEDIA_WEBSITE_URL + articleTitle}>See more on Wikipedia</a></p>
                 <p><button className="button" onClick={(event) => searchRelatedMovies(event)}>Load related films</button></p>
             </div>
         )
