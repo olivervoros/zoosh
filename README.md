@@ -33,20 +33,20 @@ Szintek:
 The solution:     
 
 Hello Zoosh Dev Team!      
+
 First of all thank you very much for the opportunity to complete the test.      
 
-Due to a CORS configuration issue, you will need to download a small Chrome plugin in order to be able to test the movie searcher project.
+*(Due to a CORS configuration issue, you will need to download a small Chrome plugin in order to be able to test the movie searcher project.
 CORS plugin: https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en
 Once you downloaded it, please allow CORS.
-(This is only a temporary solution as unfortunately I ran out of time. I will fix this CORS related issue most likely on Wednesday)
+This is only a temporary solution as unfortunately I ran out of time. I will fix this CORS related issue most likely on Wednesday)*
 
 The Code:     
 The task is ready and can be downloaded from my github account:     
 https://github.com/olivervoros/zoosh     
 I used ReactJS to complete the task.     
 After you cloned the project please run npm install.     
-I think I have the full implementation ready, I used sass, I added the spinner,   
-and I have also written some tests. (you can run them by issuing "npm tests")      
+I think I have almost the full implementation ready, I used sass, I added the spinner, and I have also written some tests. (you can run them by issuing "npm tests")           
 The only thing should be missing is the Material UI.      
 
 The live site:     
