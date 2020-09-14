@@ -42,4 +42,9 @@ The only thing should be missing is the Material UI.
 
 The live site:     
 Also, I have deployed the ready project to my dev server, which you can access from here:     
-https://www.zoosh.sancusprojects.com (username: testuser password: will be provided by Szilvia or Laura)     
+https://www.zoosh.sancusprojects.com (username: testuser password: will be provided by Szilvia or Laura)
+
+Few testing examples:
+- Searching for the term "Columbo" and clicking on the first result will give you a full working example
+- Searching for "Star Wars" and clicking on the first result will give you an example when there is no wikipedia article
+- Searching for "nincsfilm" should display a message, that there is no movie found
