@@ -17,9 +17,9 @@ class SearchResult extends Component {
         event.preventDefault();
         await this.setState({ isLoading: true, searchResultWikipedia: [] });
         try {
-            let result = await axios.get(WIKIPEDIA_OPENSEARCH_API_ENDPOINT + searchTitle);
-            let leadArticleResult = await axios.get(WIKIPEDIA_GET_LEAD_ARTICLE_ENDPOINT + searchTitle);
-            let relatedArticles = await axios.get(WIKIPEDIA_GET_RELATED_ARTICLES_ENDPOINT + searchTitle);
+            let result = await axios.get(WIKIPEDIA_OPENSEARCH_API_ENDPOINT + searchTitle, { headers: {"Access-Control-Allow-Origin": "*"} });
+            let leadArticleResult = await axios.get(WIKIPEDIA_GET_LEAD_ARTICLE_ENDPOINT + searchTitle, { headers: {"Access-Control-Allow-Origin": "*"} });
+            let relatedArticles = await axios.get(WIKIPEDIA_GET_RELATED_ARTICLES_ENDPOINT + searchTitle, { headers: {"Access-Control-Allow-Origin": "*"} });
             result.data.leadArticle = leadArticleResult.data;
             result.data.imdbID = imdbID;
             result.data.relatedArticles = relatedArticles.data;
