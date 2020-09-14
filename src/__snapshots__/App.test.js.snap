@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing poster renders correctly using snapshot 1`] = `
+<div
+  className="resultPoster"
+>
+  <p>
+    <img
+      alt=""
+      src="https://m.media-amazon.com/images/M/MV5BZjEyOTE4MzMtNmMzMy00Mzc3LWJlOTQtOGJiNDE0ZmJiOTU4L2ltYWdlXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg"
+    />
+  </p>
+</div>
+`;
+
+exports[`testing search movie form renders correctly using snapshot 1`] = `
+<div>
+  <div>
+    <form
+      action="#"
+      method="post"
+      onSubmit={[Function]}
+    >
+      <div>
+        <label>
+          Search for movies: 
+        </label>
+        <input
+          className="movieTitle"
+          id="movieTitle"
+          name="movieTitle"
+          onChange={[Function]}
+          required={true}
+          type="text"
+          value=""
+        />
+      </div>
+      <p>
+        <button
+          className="button movieSearchButton"
+        >
+          Search
+        </button>
+        <button
+          className="resetButton"
+          onClick={[Function]}
+        >
+          Reset
+        </button>
+      </p>
+    </form>
+  </div>
+  <div>
+    <div />
+  </div>
+</div>
+`;
+
+exports[`testing spinner renders correctly using snapshot 1`] = `
+<div
+  className="spinner round"
+/>
+`;

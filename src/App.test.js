@@ -7,6 +7,7 @@ import Spinner from "./components/Spinner";
 import Adapter from 'enzyme-adapter-react-16';
 import { shallow, configure, mount } from 'enzyme';
 import SearchResult from "./components/SearchResult";
+import renderer from 'react-test-renderer';
 
 configure({adapter: new Adapter()});
 
@@ -34,7 +35,7 @@ test('renders_reset_button', () => {
 
 });
 
-it('renders the search result component', () => {
+test('renders the search result component', () => {
   const movieTitle = 'Columbo';
   const isLoading = false;
   const searchResult= [];
@@ -44,7 +45,7 @@ it('renders the search result component', () => {
   expect(items).toHaveLength(1);
 });
 
-it('renders_the_movie_image', () => {
+test('renders_the_movie_image', () => {
   const poster = 'https://m.media-amazon.com/images/M/MV5BZjEyOTE4MzMtNmMzMy00Mzc3LWJlOTQtOGJiNDE0ZmJiOTU4L2ltYWdlXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg';
   const props = {poster};
   const renderedComponent = shallow(<Poster { ...props } />);
@@ -53,7 +54,7 @@ it('renders_the_movie_image', () => {
 
 });
 
-it('renders the search result data correctly', () => {
+test('renders the search result data correctly', () => {
   const isLoading = false;
   const searchResult = [{"Title":"Columbo","Year":"1971–2003","imdbID":"tt1466074","Type":"series","Poster":"https://m.media-amazon.com/images/M/MV5BODBlYjcwNWMtZDM0OS00YzZjLTllOWYtYjg2MDM0NjQ5NjRmXkEyXkFqcGdeQXVyMjExMjk0ODk@._V1_SX300.jpg"}];
   const props = {isLoading, searchResult};
@@ -62,7 +63,7 @@ it('renders the search result data correctly', () => {
   expect(h3.text()).toBe('Columbo');
 });
 
-it('spinner works correctly', () => {
+test('spinner works correctly', () => {
   const isLoading = true;
   const props = {isLoading};
   const renderedComponent = shallow(<Spinner {...props} />);
@@ -75,4 +76,27 @@ it('spinner works correctly', () => {
   const spinner2 = renderedComponent2.find('.spinner');
   expect(spinner2).toHaveLength(0);
 
+});
+
+test('testing search movie form renders correctly using snapshot', () => {
+  const movieTitle = '';
+  const isLoading = false;
+  const searchResult= [];
+  const props = {movieTitle, searchResult, isLoading};
+  const tree = renderer.create(<SearchMovieForm {...props}></SearchMovieForm>).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+
+test('testing spinner renders correctly using snapshot', () => {
+  const isLoading = true;
+  const props = {isLoading};
+  const tree = renderer.create(<Spinner {...props}></Spinner>).toJSON();
+  expect(tree).toMatchSnapshot();
+});
+
+test('testing poster renders correctly using snapshot', () => {
+  const poster = 'https://m.media-amazon.com/images/M/MV5BZjEyOTE4MzMtNmMzMy00Mzc3LWJlOTQtOGJiNDE0ZmJiOTU4L2ltYWdlXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg';
+  const props = {poster};
+  const tree = renderer.create(<Poster {...props}></Poster>).toJSON();
+  expect(tree).toMatchSnapshot();
 });
