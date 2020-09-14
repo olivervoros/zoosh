@@ -28,4 +28,27 @@ Szintek:
 2, A CSS stylus-szal legyen definiálva (less, sass, stb)      
 3, Spinner, aka REST hívások közben (egyszerű) progress indikátor      
 4, Bónusz #1: futtatás és tesztelés taskokra automatizálás      
-5, Bónusz #2: Material-UI-os library használata, Material-UI-os kinézet      
+5, Bónusz #2: Material-UI-os library használata, Material-UI-os kinézet     
+
+The solution:
+
+Hello Zoosh Dev Team!
+First of all thank you very much for the opportunity to complete the test.
+
+Due to a CORS configuration issue, you will need to download a small Chrome plugin in order to be able to test the movie searcher project.
+CORS plugin: https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en
+Once you downloaded it, please allow CORS.
+(This is only a temporary solution as unfortunately I ran out of time. I will fix this CORS related issue most likely on Wednesday)
+
+The Code:
+The task is ready and can be downloaded from my github account:
+https://github.com/olivervoros/zoosh
+I used ReactJS to complete the task.
+After you cloned the project please run npm install.
+I think I have the full implementation ready, I used sass, I added the spinner, 
+and I have also written some tests. (you can run them by issuing "npm tests") 
+The only thing should be missing is the Material UI. 
+
+The live site:
+Also, I have deployed the ready project to my dev server, which you can access from here:
+https://www.zoosh.sancusprojects.com (username: testuser password: will be provided by Szilvia or Laura)
