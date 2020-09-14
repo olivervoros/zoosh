@@ -25,11 +25,11 @@ class SearchMovieForm extends Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-        await this.setState({ isLoading: true, displayError: false });
+        await this.setState({ isLoading: true, displayError: false, searchResult: [] });
         const searchTitle = this.state.movieTitle;
         try {
             let result = await axios.get(IMDB_API_ENDPOINT + slugify(searchTitle));
-            await new Promise(r => setTimeout(r, 2000)); // To simulate the REST API request...
+            await new Promise(r => setTimeout(r, 2000)); // To be able to show the spinner...
             await this.setState({ isLoading: false });
             await this.setState({ searchResult: result.data.Search });
             await this.setState({ displayError: true });

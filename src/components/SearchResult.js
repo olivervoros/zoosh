@@ -24,9 +24,9 @@ class SearchResult extends Component {
             result.data.imdbID = imdbID;
             result.data.relatedArticles = relatedArticles.data;
             const wikipediaArticleImdbID = (typeof result.data === 'undefined') ? 0 : result.data.imdbID;
-            if(imdbID === wikipediaArticleImdbID && result.data.leadArticle) {
+            if(imdbID === wikipediaArticleImdbID) {
                 await this.setState({ wikipediaArticleImdbID: wikipediaArticleImdbID} );
-                await new Promise(r => setTimeout(r, 2000)); // To simulate the REST API request...
+                await new Promise(r => setTimeout(r, 2000)); // To be able to show the spinner...
                 await this.setState({searchResultWikipedia: result});
                 await this.setState({isLoading: false});
             }

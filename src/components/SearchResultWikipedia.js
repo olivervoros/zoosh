@@ -30,17 +30,17 @@ class SearchResultWikipedia extends Component {
         const articleTitle = (typeof searchResultWikipedia.data === 'undefined') ? "" : searchResultWikipedia.data[0];
         const page = (typeof searchResultWikipedia.data === 'undefined') ? "" : searchResultWikipedia.data.leadArticle.query.pages;
         const pageID = Object.keys(page)[0];
-        const leadArticle = (typeof searchResultWikipedia.data === 'undefined') ? "" : searchResultWikipedia.data.leadArticle.query.pages[pageID].extract;
+        const leadArticle = (typeof searchResultWikipedia.data === 'undefined') ? false : searchResultWikipedia.data.leadArticle.query.pages[pageID].extract;
         const relatedArticles = (typeof searchResultWikipedia.data === 'undefined') ? [] : searchResultWikipedia.data.relatedArticles[3];
 
         let content = ''
         if (this.state.page==='ARTICLE' && leadArticle) {
             content = <WikiArticle isLoading={isLoading} imdbID={imdbID} articleTitle={articleTitle} leadArticle={leadArticle} searchRelatedMovies={this.searchRelatedMovies}></WikiArticle>;
+        } else if(this.state.page==='ARTICLE' && leadArticle !== false) {
+            content = <div><p>No wikipedia article could be found...</p></div>
         } else if(this.state.page==='RELATED') {
             content = <WikiRelatedArticle relatedArticles={relatedArticles} backToMovieDetails={this.backToMovieDetails}></WikiRelatedArticle>;
-        } else {
-            content = <div></div>;
-        }
+        } else {}
 
         return (
 

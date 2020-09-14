@@ -37,7 +37,7 @@ The Code:
 The task is ready and can be downloaded from my github account:     
 https://github.com/olivervoros/zoosh     
 I used ReactJS to complete the task, so after you cloned the git project please run npm install.     
-I think I have almost the full implementation ready, I used sass, I added the spinner, and I have also written some tests. (you can run them by issuing "npm tests")           
+I tried to finish all levels, I used Sass, I added the loading spinner, and I have also written some tests. (you can run them by issuing "npm tests")           
 The only thing should be missing is the Material UI.      
 
 The live site:     
