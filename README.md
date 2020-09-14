@@ -4,13 +4,10 @@ A feladat:
 
 Követelmények:
 
-●  Tagolt, olvasható, tiszta kód (nem 1 fájl), a generált HTML kód strukturált
-
-●  Angol nyelv (UI és kód egyaránt)
-
-●  Külső library-ket használhatsz (angular, react, ramda, moment, jquery, stb), de konkrétan az IMDB-s és Wikipedia-s kéréseket és azok feldolgozását elrejtő library-ket nem
-
-●  A design másodlagos, csak minimális legyen (elrendezés, margók, címek kiemelése, stb)
+- Tagolt, olvasható, tiszta kód (nem 1 fájl), a generált HTML kód strukturált
+- Angol nyelv (UI és kód egyaránt)
+- Külső library-ket használhatsz (angular, react, ramda, moment, jquery, stb), de konkrétan az IMDB-s és Wikipedia-s kéréseket és azok feldolgozását elrejtő library-ket nem
+- A design másodlagos, csak minimális legyen (elrendezés, margók, címek kiemelése, stb)
 
 Működés:
 
