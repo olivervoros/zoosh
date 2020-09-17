@@ -8,14 +8,14 @@ function SearchResultWikipedia(props) {
 
     const [page, setPage] = useState('ARTICLE');
 
-    function searchRelatedMovies(event) {
+    async function searchRelatedMovies(event) {
         event.preventDefault();
-        setPage('RELATED' );
+        await setPage('RELATED' );
     }
 
-    function backToMovieDetails(event) {
+    async function backToMovieDetails(event) {
         event.preventDefault();
-        setPage('ARTICLE' );
+        await setPage('ARTICLE' );
     }
 
         const articleTitle = (typeof props.searchResultWikipedia.data === 'undefined') ? "" : props.searchResultWikipedia.data[0];
@@ -23,11 +23,10 @@ function SearchResultWikipedia(props) {
         const wikipediaPageID = Object.keys(wikipediaPage)[0];
         const leadArticle = (typeof props.searchResultWikipedia.data === 'undefined') ? false : props.searchResultWikipedia.data.leadArticle.query.pages[wikipediaPageID].extract;
         const relatedArticles = (typeof props.searchResultWikipedia.data === 'undefined') ? [] : props.searchResultWikipedia.data.relatedArticles[3];
-
         let content = ''
         if (page==='ARTICLE' && leadArticle) {
             content = <WikiArticle isLoading={props.isLoading} imdbID={props.imdbID} articleTitle={articleTitle} leadArticle={leadArticle} searchRelatedMovies={searchRelatedMovies}></WikiArticle>;
-        } else if('ARTICLE' && leadArticle !== false) {
+        } else if(page==='ARTICLE' && leadArticle !== false) {
             content = <div><p>No wikipedia article could be found...</p></div>
         } else if('RELATED') {
             content = <WikiRelatedArticle relatedArticles={relatedArticles} backToMovieDetails={backToMovieDetails}></WikiRelatedArticle>;
