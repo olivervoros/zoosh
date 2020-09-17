@@ -1,55 +1,45 @@
-import React, {Component} from 'react'
+import React, { useState } from 'react'
 import '../App.sass';
 import WikiArticle from "./WikiArticle";
 import WikiRelatedArticle from "./WikiRelatedArticle";
 import Spinner from "./Spinner";
 
-class SearchResultWikipedia extends Component {
+function SearchResultWikipedia(props) {
 
-    constructor(props) {
-        super(props);
-        this.state = { page: 'ARTICLE' };
+    const [page, setPage] = useState('ARTICLE');
 
-        this.searchRelatedMovies = this.searchRelatedMovies.bind(this);
-        this.backToMovieDetails = this.backToMovieDetails.bind(this);
-    }
-
-    async searchRelatedMovies(event) {
+    function searchRelatedMovies(event) {
         event.preventDefault();
-        await this.setState({ page: 'RELATED' });
+        setPage('RELATED' );
     }
 
-    async backToMovieDetails(event) {
+    function backToMovieDetails(event) {
         event.preventDefault();
-        await this.setState({ page: 'ARTICLE' });
+        setPage('ARTICLE' );
     }
 
-    render() {
-
-        const { searchResultWikipedia, imdbID, isLoading } = this.props;
-        const articleTitle = (typeof searchResultWikipedia.data === 'undefined') ? "" : searchResultWikipedia.data[0];
-        const page = (typeof searchResultWikipedia.data === 'undefined') ? "" : searchResultWikipedia.data.leadArticle.query.pages;
-        const pageID = Object.keys(page)[0];
-        const leadArticle = (typeof searchResultWikipedia.data === 'undefined') ? false : searchResultWikipedia.data.leadArticle.query.pages[pageID].extract;
-        const relatedArticles = (typeof searchResultWikipedia.data === 'undefined') ? [] : searchResultWikipedia.data.relatedArticles[3];
+        const articleTitle = (typeof props.searchResultWikipedia.data === 'undefined') ? "" : props.searchResultWikipedia.data[0];
+        const wikipediaPage = (typeof props.searchResultWikipedia.data === 'undefined') ? "" : props.searchResultWikipedia.data.leadArticle.query.pages;
+        const wikipediaPageID = Object.keys(wikipediaPage)[0];
+        const leadArticle = (typeof props.searchResultWikipedia.data === 'undefined') ? false : props.searchResultWikipedia.data.leadArticle.query.pages[wikipediaPageID].extract;
+        const relatedArticles = (typeof props.searchResultWikipedia.data === 'undefined') ? [] : props.searchResultWikipedia.data.relatedArticles[3];
 
         let content = ''
-        if (this.state.page==='ARTICLE' && leadArticle) {
-            content = <WikiArticle isLoading={isLoading} imdbID={imdbID} articleTitle={articleTitle} leadArticle={leadArticle} searchRelatedMovies={this.searchRelatedMovies}></WikiArticle>;
-        } else if(this.state.page==='ARTICLE' && leadArticle !== false) {
+        if (page==='ARTICLE' && leadArticle) {
+            content = <WikiArticle isLoading={props.isLoading} imdbID={props.imdbID} articleTitle={articleTitle} leadArticle={leadArticle} searchRelatedMovies={searchRelatedMovies}></WikiArticle>;
+        } else if('ARTICLE' && leadArticle !== false) {
             content = <div><p>No wikipedia article could be found...</p></div>
-        } else if(this.state.page==='RELATED') {
-            content = <WikiRelatedArticle relatedArticles={relatedArticles} backToMovieDetails={this.backToMovieDetails}></WikiRelatedArticle>;
+        } else if('RELATED') {
+            content = <WikiRelatedArticle relatedArticles={relatedArticles} backToMovieDetails={backToMovieDetails}></WikiRelatedArticle>;
         } else {}
 
         return (
 
             <div className="container">
-                <Spinner isLoading={isLoading} />
+                <Spinner isLoading={props.isLoading} />
                 { content }
             </div>
         )
-    }
 
 }
 

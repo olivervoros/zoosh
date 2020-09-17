@@ -1,66 +1,63 @@
-import React, { Component } from 'react'
+import React, {useState} from 'react'
 import '../App.sass';
-import axios from "axios";
 import SearchResult from "./SearchResult";
-import { IMDB_API_ENDPOINT, slugify } from "../Helper";
+import { slugify } from "../Helper";
+import {callImdbApi} from "../ApiCaller";
 
-class SearchMovieForm extends Component {
+function SearchMovieForm() {
 
-    constructor(props) {
-        super(props);
-        this.state = {movieTitle: '', searchResult: [], isLoading: false, displayError: false};
+    const [movieTitle, setMovieTitle] = useState('');
+    const [searchResult, setSearchResult] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [displayError, setDisplayError] = useState(false);
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+    function handleChange(event) {
+        setMovieTitle(event.target.value);
     }
 
-    handleChange(event) {
-        this.setState({movieTitle: event.target.value});
-    }
-
-    reset(event) {
+    function reset(event) {
         event.preventDefault();
-        this.setState({movieTitle: '', searchResult: [], isLoading: false, displayError: false});
+        setMovieTitle('');
+        setSearchResult([]);
+        setIsLoading(false);
+        setDisplayError(false);
     }
 
-    async handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault();
-        await this.setState({ isLoading: true, displayError: false, searchResult: [] });
-        const searchTitle = this.state.movieTitle;
+        setIsLoading(true);
+        setDisplayError(false);
+        setSearchResult([]);
         try {
-            let result = await axios.get(IMDB_API_ENDPOINT + slugify(searchTitle));
-            await new Promise(r => setTimeout(r, 2000)); // To be able to show the spinner...
-            await this.setState({ isLoading: false });
-            await this.setState({ searchResult: result.data.Search });
-            await this.setState({ displayError: true });
+            let searchTitle = slugify(movieTitle);
+            let result = await callImdbApi(searchTitle);
+            await setIsLoading(false);
+            await setSearchResult(result.data.Search);
+            await setDisplayError(true);
 
         } catch (error) {
             console.log(error);
         }
     }
 
-
-    render() {
-
         return (
             <div>
                 <div>
-                    <form action="#" method="post" onSubmit={this.handleSubmit}>
+                    <form action="#" method="post" onSubmit={handleSubmit}>
                         <div>
                             <label>Search for movies: </label>
-                            <input className="movieTitle" value={this.state.movieTitle} onChange={this.handleChange} required id="movieTitle"
+                            <input className="movieTitle" value={movieTitle} onChange={handleChange} required id="movieTitle"
                                    name="movieTitle" type="text"/>
                         </div>
                         <p>
                             <button className="button movieSearchButton">Search</button>
-                            <button onClick={(event) => this.reset(event)} className="resetButton">Reset</button>
+                            <button onClick={(event) => reset(event)} className="resetButton">Reset</button>
                         </p>
                     </form>
                 </div>
-                <SearchResult searchResult = { this.state.searchResult } isLoading={this.state.isLoading} displayError={this.state.displayError}></SearchResult>
+                <SearchResult searchResult = { searchResult } isLoadingParent={isLoading} displayError={displayError}></SearchResult>
             </div>
         )
-    }
 }
 
 export default SearchMovieForm;

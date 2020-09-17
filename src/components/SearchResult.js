@@ -1,74 +1,64 @@
-import React, {Component} from 'react'
+import React, {useState} from 'react'
 import '../App.sass';
-import axios from "axios";
-import { WIKIPEDIA_OPENSEARCH_API_ENDPOINT, WIKIPEDIA_GET_LEAD_ARTICLE_ENDPOINT, WIKIPEDIA_GET_RELATED_ARTICLES_ENDPOINT } from "../Helper";
 import SearchResultWikipedia from "./SearchResultWikipedia";
 import Poster from "./Poster";
 import Spinner from "./Spinner";
+import {callWikipediaApi} from "../ApiCaller";
 
-class SearchResult extends Component {
+function SearchResult(props) {
 
-    constructor(props) {
-        super(props);
-        this.state = { searchResultWikipedia: [], isLoading: false, wikipediaArticleImdbID: false};
-    }
+    const [searchResultWikipedia, setSearchResultWikipedia] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [wikipediaArticleImdbID, setWikipediaArticleImdbID] = useState(false);
 
-    async searchWikipedia(event, searchTitle, imdbID) {
-        event.preventDefault();
-        await this.setState({ isLoading: true, searchResultWikipedia: [] });
+    async function searchWikipedia(event, searchTitle, imdbID) {
+        event.preventDefault()
+        setIsLoading(true);
+        setSearchResultWikipedia([]);
         try {
-            let result = await axios.get(WIKIPEDIA_OPENSEARCH_API_ENDPOINT + searchTitle);
-            let leadArticleResult = await axios.get(WIKIPEDIA_GET_LEAD_ARTICLE_ENDPOINT + searchTitle);
-            let relatedArticles = await axios.get(WIKIPEDIA_GET_RELATED_ARTICLES_ENDPOINT + searchTitle);
-            result.data.leadArticle = leadArticleResult.data;
-            result.data.imdbID = imdbID;
-            result.data.relatedArticles = relatedArticles.data;
+            let result = await callWikipediaApi(searchTitle, imdbID);
             const wikipediaArticleImdbID = (typeof result.data === 'undefined') ? 0 : result.data.imdbID;
-            if(imdbID === wikipediaArticleImdbID) {
-                await this.setState({ wikipediaArticleImdbID: wikipediaArticleImdbID} );
-                await new Promise(r => setTimeout(r, 2000)); // To be able to show the spinner...
-                await this.setState({searchResultWikipedia: result});
-                await this.setState({isLoading: false});
+            if (imdbID === wikipediaArticleImdbID) {
+                setWikipediaArticleImdbID(wikipediaArticleImdbID);
+                setSearchResultWikipedia(result);
+                setIsLoading(false);
             }
-
         } catch (error) {
             console.log(error);
         }
     }
 
-    render() {
+    const hasResults = (typeof props.searchResult !== 'undefined' && props.searchResult.length > 0);
 
-        const {searchResult, isLoading, displayError} = this.props;
-        const hasResults = (typeof searchResult !== 'undefined' && searchResult.length > 0)
-
-        return (
-            <div>
-                <Spinner isLoading={isLoading} />
-                {! hasResults && displayError &&
-                    <h4>We could not find a movie with that search term. Please try using a different term...</h4>
-                }
-                {hasResults && <h3>IMDB Movie Database Search Results:</h3>}
-                {hasResults && searchResult.map((result) => (
-                    <div className="resultCard" key={result.imdbID}>
-                        <div className="resultData">
-                        <a onClick={(event) => this.searchWikipedia(event, result.Title, result.imdbID)} href="">
+    return (
+        <div>
+            <Spinner isLoading={props.isLoadingParent}/>
+            {!hasResults && props.displayError &&
+            <h4>We could not find a movie with that search term. Please try using a different term...</h4>
+            }
+            {hasResults && <h3>IMDB Movie Database Search Results:</h3>}
+            {hasResults && props.searchResult.map((result) => (
+                <div className="resultCard" key={result.imdbID}>
+                    <div className="resultData">
+                        <a onClick={(event) => searchWikipedia(event, result.Title, result.imdbID)} href="">
                             <h3 className="articleTitle">{result.Title}</h3>
                         </a>
                         <p>Year: {result.Year}</p>
                         <p>IMDB ID: {result.imdbID}</p>
                         <p>Type: {result.Type}</p>
-                        </div>
-                        <Poster poster={ result.Poster }></Poster>
-                        <div className="break"></div>
-                        { this.state.wikipediaArticleImdbID === result.imdbID ?
-                        <SearchResultWikipedia isLoading={this.state.isLoading} imdbID={result.imdbID} searchResultWikipedia={ this.state.searchResultWikipedia }></SearchResultWikipedia> :
-                        <div></div>
-                        }
                     </div>
-                ))}
-            </div>
-        )
-    }
+                    <Poster poster={result.Poster}></Poster>
+                    <div className="break"></div>
+                    {wikipediaArticleImdbID === result.imdbID ?
+                        <SearchResultWikipedia isLoading={isLoading} imdbID={result.imdbID}
+                                               searchResultWikipedia={searchResultWikipedia}></SearchResultWikipedia> :
+                        <div></div>
+                    }
+                </div>
+            ))}
+        </div>
+    )
+
 
 }
 

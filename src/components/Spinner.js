@@ -1,20 +1,15 @@
-import React, {Component} from 'react'
+import React from 'react'
 import '../App.sass';
 
-class Spinner extends Component {
+function Spinner(props) {
 
-    render() {
-
-        const { isLoading } = this.props;
-
-        if( ! isLoading) {
+        if( ! props.isLoading) {
             return <div></div>;
         }
 
         return (
            <div className="spinner round"></div>
         )
-    }
 
 }
 
