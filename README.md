@@ -1,31 +1,31 @@
-A feladat:
+The task:
 
-Írj egy tisztán front-end (react/angular/vue) JavaScript alkalmazást, amely filmek keresését segíti!
+Write a solely front-end (react/angular/vue) JavaScript application, which helps to search for movies.
 
-Követelmények:
+Requirements:
 
-- Tagolt, olvasható, tiszta kód (nem 1 fájl), a generált HTML kód strukturált
-- Angol nyelv (UI és kód egyaránt)
-- Külső library-ket használhatsz (angular, react, ramda, moment, jquery, stb), de konkrétan az IMDB-s és Wikipedia-s kéréseket és azok feldolgozását elrejtő library-ket nem
-- A design másodlagos, csak minimális legyen (elrendezés, margók, címek kiemelése, stb)
+- Easy to read, modular, clean code (not a single file), and the generated HTML is structured
+- You can use popular JS libraries (angular, react, ramda, moment, jquery, stb)
+- Design is not very important, and should be only minimal (layout, margin/paddings, titles highlighted, stb)
 
-Működés:
+Functionality:
 
-A UI-on legyen egy filmcím keresőmező, enterre/gombnyomásra az IMDB-ről egy REST kéréssel letölti a keresési találatokat
+The UI should have an input field to search movies.       
+By adding the search term and pressing the button or hitting enter the software loads the search results from IMDB using a REST request.
 
-A találatokat és néhány adatukat listában megjeleníti, címek kattinthatóak 
+The results should be displayed with some associated data/image, and the titles should be clickable. 
+By clicking on the title, the software attempts to load the related Wikipedia page by making a REST request to the Wikipedia API.
+The results should contain one link to the IMDB site, and one to the Wikipedia site.
+By clicking on the result title, the wikipedia article loads.
+There should also be another button on the page, to load the related Wikipedia links.
 
-Egy címre kattintva az app megpróbálja megtalálni a kapcsolódó angol wikipedia oldalt (REST kéréssel), majd egy detail panelen megjeleníteni annak összefoglalóját (pl. első bekezdés), az IMDB-s és wikipedia-s új ablakban nyíló kattintható linkkel együtt
+Levels:
 
-Bónusz: Kétállapotú kereső; a film két linkje mellett egy “kapcsolódó” gomb: ennek hatására a filmlista átvált keresési találatokból a kiválasztott filmhez kapcsolódó filmek (related) listájára
-
-Szintek:
-
-1, Működő webapp    
-2, A CSS stylus-szal legyen definiálva (less, sass, stb)         
-3, Spinner, aka REST hívások közben (egyszerű) progress indikátor       
-4, Bónusz #1: futtatás és tesztelés taskokra automatizálás      
-5, Bónusz #2: Material-UI-os library használata, Material-UI-os kinézet         
+1, The web app is working correctly
+2, The CSS is defined by sass or less       
+3, There is a progress indicator/Spinner when the APIs are queried
+4, There are tests written 
+5, The Material-UI library is being used to define the UI  
 
 The solution:     
 
