@@ -21,11 +21,11 @@ There should also be another button on the page, to load the related Wikipedia l
 
 Levels:
 
-1, The web app is working correctly
-2, The CSS is defined by sass or less       
-3, There is a progress indicator/Spinner when the APIs are queried
-4, There are tests written 
-5, The Material-UI library is being used to define the UI  
+1, The web app is working correctly         
+2, The CSS is defined by sass or less             
+3, There is a progress indicator/Spinner when the APIs are queried        
+4, There are tests written        
+5, The Material-UI library is being used to define the UI          
 
 The solution:     
 
